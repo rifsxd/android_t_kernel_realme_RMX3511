@@ -67,9 +67,6 @@ jobs:
       # Whether to enable KernelSU
       ENABLE_KERNELSU: ${{ matrix.CONFIG.enableKernelSU }}
 
-      # Whether to enable LXC docker
-      ENABLE_LXC: ${{ matrix.CONFIG.enableLXC }}
-
       # Set output & ccache directory
       OUT_DIR: "${{ github.workspace }}/out"
       CCACHE_DIR: "${{ github.workspace }}/ccache"
