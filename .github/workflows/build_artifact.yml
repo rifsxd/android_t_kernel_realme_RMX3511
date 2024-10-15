@@ -219,29 +219,6 @@ jobs:
 
           echo "🤔 $args"
 
-      - name: 😋 Setup KernelSU
-        working-directory: ${{ github.workspace }}
-        env:
-          ARCH: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.ENABLE_KERNELSU == 'true' }}
-        run: |
-          # Delete old KernelSU
-          if [ -d "./KernelSU" ]; then
-            rm -rf "./KernelSU"
-          fi
-          if [ -d "./drivers/kernelsu" ]; then
-            rm -rf "./drivers/kernelsu"
-          fi
-
-          # Apply new KernelSU patches
-          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
-
-          echo -e "CONFIG_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-          echo -e "CONFIG_HAVE_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-          echo -e "CONFIG_KPROBE_EVENTS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-
-          cat arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-
       - name: 👍 Start building the kernel
         working-directory: ${{ github.workspace }}
         env:
@@ -257,15 +234,15 @@ jobs:
       - name: 😌 Start patching boot.img
         working-directory: ${{ github.workspace }}
         run: |
-          if [[ -f "${{ github.workspace }}out/arch/${{ env.ARCH }}/boot/Image" ]]; then
+          if [[ -f "${{ env.OUT_DIR }}"/arch/"${{ env.ARCH }}"/boot/Image ]]; then
             echo "🤔 Unpacking stock boot.img"
             mkdir -p tmp/unpacked_boot
             cd tmp/unpacked_boot
-            "${{ env.WORKSPACE }}/build/bin/magiskboot" unpack "${{ env.WORKSPACE }}/build/boot/boot.img"
+            "${{ env.WORKSPACE }}"/build/bin/magiskboot unpack "${{ env.WORKSPACE }}"/build/boot/boot.img
             echo "🤔 Unpacked boot.img"
-            cp "${{ github.workspace }}out/arch/${{ env.ARCH }}/boot/Image" ./kernel
+            cp "${{ github.workspace }}"/out/arch/"${{ env.ARCH }}"/boot/Image ./kernel
             echo "🤔 Replaced stock kernel with custom kernel"
-            "${{ env.WORKSPACE }}/build/bin/magiskboot" repack "${{ env.WORKSPACE }}/build/boot/boot.img"
+            "${{ env.WORKSPACE }}"/build/bin/magiskboot repack "${{ env.WORKSPACE }}"/build/boot/boot.img
             echo "🤔 Repacked boot.img"
             mv new-boot.img boot.img
           else
