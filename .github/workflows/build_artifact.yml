@@ -25,7 +25,7 @@ jobs:
         id: generate-matrix
         run: |
           echo "CONFIGS<<EOF" >> $GITHUB_OUTPUT
-          jq -s '[.[][]]' configs/*.config.json >> $GITHUB_OUTPUT
+          jq -s '[.[][]]' build/configs/*.config.json >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       # Set compile time.
@@ -253,11 +253,38 @@ jobs:
           ARGS: ${{ steps.generate-args.outputs.ARGS }}
         run: |
           echo "🤔 PATH Variable: $PATH"
-          export KBUILD_BUILD_HOST=Github-Action
+          export KBUILD_BUILD_HOST=ubuntu-workstation
           export KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
           make ${{ env.ARGS }} ${{ env.KERNEL_DEFCONFIG_PATH }}
           make ${{ env.ARGS }}
           # tree ${{ env.OUT_DIR }}
+          
+      - name: 😌 Start unpacking stock boot.img
+        working-directory: ${{ env.KERNEL_NAME }}
+        run: |
+          if [[ -f "${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/Image" ]]; then
+            echo "🤔 Unpacking stock boot.img"
+            mkdir -p "${{ env.KERNEL_NAME }}"/unpacked_boot
+            cd unpacked_boot
+            "${{ env.KERNEL_NAME }}/bin/magiskboot" unpack "${{ env.KERNEL_NAME }}/configs/boot.img"
+            echo "🤔 Unpacked boot.img"
+            cp "${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/Image" ./kernel
+            echo "🤔 Replaced stock kernel with custom kernel"
+            "${{ env.KERNEL_NAME }}/bin/magiskboot" repack "${{ env.KERNEL_NAME }}/configs/boot.img"
+            echo "🤔 Repacked boot.img"
+            mv new-boot.img boot.img
+          else
+            echo "🤔 Compiled kernel Image not found!"
+            exit 1
+          fi
+          
+      - name: 💛 Upload boot.img
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-boot.img
+          path: "${{ env.KERNEL_NAME }}"/unpacked_boot/boot.img
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: 💛 Upload Image
         uses: actions/upload-artifact@v3
