@@ -282,7 +282,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-boot.img
-          path: "${{ env.KERNEL_NAME }}"/unpacked_boot/boot.img
+          path: ${{ env.KERNEL_NAME }}/unpacked_boot/boot.img
           if-no-files-found: ignore
           retention-days: 7
 
