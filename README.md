@@ -48,8 +48,13 @@ Gain full control over your device with **KernelSU**. This feature allows root a
 3. Backup your data before proceeding.
 
 ### Flashing the Kernel:
-1. Download the kernel image from [Releases](#).
+**METHOD 1**
+1. Download the Anykernel3-xxx.zip from [Releases](https://guthub.com/rifsxd/android_t_kernel_realme_rmx3511/releases).
 2. Boot into **TWRP** recovery.
+3. Install the Anykernel3-xxx.zip and reboot.
+**METHOD 2**
+1. Download the boot.img from [Releases](https://guthub.com/rifsxd/android_t_kernel_realme_rmx3511/releases).
+2. Reboot into bootloader.
 3. Flash the kernel image:
     ```
     fastboot flash boot_a/boot_b boot.img
@@ -60,9 +65,9 @@ Gain full control over your device with **KernelSU**. This feature allows root a
 After flashing the kernel, KernelSU should be active. You can install a root manager app to manage root permissions.
 
 ## Bug Reports & Contributions
-If you encounter any issues or want to contribute to the development of this kernel, feel free to open an issue or pull request on the [GitHub Repository](#).
+If you encounter any issues or want to contribute to the development of this kernel, feel free to open an issue or pull request on the [GitHub Repository](https://guthub.com/rifsxd/android_t_kernel_realme_rmx3511).
 
 ## Credits
 - **Uniperf** for performance and battery life enhancements.
-- **KernelSU** for root access.
+- [KernelSU](https://github.com/tiann/kernelsu) for root access.
 - Special thanks to the **Android kernel development community**.
