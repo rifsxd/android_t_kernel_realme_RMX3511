@@ -5,17 +5,20 @@ Welcome to the custom kernel for the **Realme C35 (RMX3511)**! This kernel is ba
 
 ### Key Features:
 - **Linux Kernel 5.4.254**: Stable and well-tested for Android devices.
-- **Uniperf Integration**: Improved performance and battery life tuning to maximize device efficiency.
+- **Uniperf (Modifications)**: Improved performance and battery life tuning to maximize device efficiency.
 - **KernelSU (Rootkit)**: Full root access with security measures in place.
 - **Android 12 - 14 Support**: Designed to run on all major recent Android versions.
 
 ## Modifications
 
-### 1. **Uniperf (Performance Modifications)**
+### 1. **Uniperf (Performance amd Battery Life Modifications)**
 This kernel integrates the **Uniperf** module for boosting performance and battery life. Key enhancements include:
 - Dynamic CPU frequency scaling
 - Improved task scheduling for reduced latency
 - Enhanced memory management and I/O handling
+- Interactive CPU governor as default 
+- Added BFQ I/O scheduler
+- Disabled debug logs
 
 ### 2. **KernelSU (Rootkit)**
 Gain full control over your device with **KernelSU**. This feature allows root access, offering:
