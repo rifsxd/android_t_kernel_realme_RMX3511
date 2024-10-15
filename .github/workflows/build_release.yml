@@ -379,6 +379,8 @@ jobs:
         if: ${{ env.USE_ANYKERNEL3 == 'true' && env.CONFIRM_RELEASE == 'true' }}
         with:
           tag_name: v${{ env.BUILD_DATE }}.${{ github.run_number }}
-          files: "${{ env.ANYKERNEL3_FILE }}.zip","${{ github.workspace }}/tmp/boot.img"
+          files: |
+            "${{ env.ANYKERNEL3_FILE }}.zip"
+            "${{ github.workspace }}/tmp/boot.img"
           generate_release_notes: true
     
