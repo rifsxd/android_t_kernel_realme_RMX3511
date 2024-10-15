@@ -1,142 +1,64 @@
-# How do I submit patches to Android Common Kernels
+# Uniperf Kernel for Realme C35 (RMX3511)
 
-1. BEST: Make all of your changes to upstream Linux. If appropriate, backport to the stable releases.
-   These patches will be merged automatically in the corresponding common kernels. If the patch is already
-   in upstream Linux, post a backport of the patch that conforms to the patch requirements below.
+## Overview
+Welcome to the custom kernel for the **Realme C35 (RMX3511)**! This kernel is based on **Linux 5.4.254** and is designed to enhance your device’s performance and flexibility. It includes **Uniperf**, a performance-oriented modifications, and **KernelSU**, a kernel-level rootkit providing extended control over your device.
 
-2. LESS GOOD: Develop your patches out-of-tree (from an upstream Linux point-of-view). Unless these are
-   fixing an Android-specific bug, these are very unlikely to be accepted unless they have been
-   coordinated with kernel-team@android.com. If you want to proceed, post a patch that conforms to the
-   patch requirements below.
+### Key Features:
+- **Linux Kernel 5.4.254**: Stable and well-tested for Android devices.
+- **Uniperf Integration**: Improved performance and battery life tuning to maximize device efficiency.
+- **KernelSU (Rootkit)**: Full root access with security measures in place.
+- **Android 12 - 14 Support**: Designed to run on all major recent Android versions.
 
-# Common Kernel patch requirements
+## Modifications
 
-- All patches must conform to the Linux kernel coding standards and pass `script/checkpatch.pl`
-- Patches shall not break gki_defconfig or allmodconfig builds for arm, arm64, x86, x86_64 architectures
-(see  https://source.android.com/setup/build/building-kernels)
-- If the patch is not merged from an upstream branch, the subject must be tagged with the type of patch:
-`UPSTREAM:`, `BACKPORT:`, `FROMGIT:`, `FROMLIST:`, or `ANDROID:`.
-- All patches must have a `Change-Id:` tag (see https://gerrit-review.googlesource.com/Documentation/user-changeid.html)
-- If an Android bug has been assigned, there must be a `Bug:` tag.
-- All patches must have a `Signed-off-by:` tag by the author and the submitter
+### 1. **Uniperf (Performance Modifications)**
+This kernel integrates the **Uniperf** module for boosting performance and battery life. Key enhancements include:
+- Dynamic CPU frequency scaling
+- Improved task scheduling for reduced latency
+- Enhanced memory management and I/O handling
 
-Additional requirements are listed below based on patch type
+### 2. **KernelSU (Rootkit)**
+Gain full control over your device with **KernelSU**. This feature allows root access, offering:
+- Ability to run root-only applications.
+- Custom control over device processes and configurations.
+- Root with security management to avoid unintentional exploitation.
 
-## Requirements for backports from mainline Linux: `UPSTREAM:`, `BACKPORT:`
+### 3. **Additional Tweaks**
+- Optimized battery life without sacrificing performance.
+- Built-in support for various I/O schedulers.
+- Improved power management for extended screen-on time.
 
-- If the patch is a cherry-pick from Linux mainline with no changes at all
-    - tag the patch subject with `UPSTREAM:`.
-    - add upstream commit information with a `(cherry-picked from ...)` line
-    - Example:
-        - if the upstream commit message is
-```
-        important patch from upstream
+## Compatibility
 
-        This is the detailed description of the important patch
+| Feature         | Supported Versions         |
+|-----------------|----------------------------|
+| Device          | Realme C35 (RMX3511)        |
+| Android Versions| Android 12 - 14             |
+| Kernel Version  | 5.4.254                     |
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-```
-        - then Joe Smith would upload the patch for the common kernel as
-```
-        UPSTREAM: important patch from upstream
+## Installation
 
-        This is the detailed description of the important patch
+### Requirements:
+1. **Unlocked bootloader** on your Realme C35.
+2. A custom recovery like **TWRP**.
+3. Backup your data before proceeding.
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
+### Flashing the Kernel:
+1. Download the kernel image from [Releases](#).
+2. Boot into **TWRP** recovery.
+3. Flash the kernel image:
+    ```
+    fastboot flash boot_a/boot_b boot.img
+    ```
+4. Reboot your device and enjoy the enhanced performance!
 
-        Bug: 135791357
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        (cherry-picked from c31e73121f4c1ec41143423ac6ce3ce6dafdcec1)
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+### Rooting with KernelSU:
+After flashing the kernel, KernelSU should be active. You can install a root manager app to manage root permissions.
 
-- If the patch requires any changes from the upstream version, tag the patch with `BACKPORT:`
-instead of `UPSTREAM:`.
-    - use the same tags as `UPSTREAM:`
-    - add comments about the changes under the `(cherry-picked from ...)` line
-    - Example:
-```
-        BACKPORT: important patch from upstream
+## Bug Reports & Contributions
+If you encounter any issues or want to contribute to the development of this kernel, feel free to open an issue or pull request on the [GitHub Repository](#).
 
-        This is the detailed description of the important patch
-
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-
-        Bug: 135791357
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        (cherry-picked from c31e73121f4c1ec41143423ac6ce3ce6dafdcec1)
-        [ Resolved minor conflict in drivers/foo/bar.c ]
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
-
-## Requirements for other backports: `FROMGIT:`, `FROMLIST:`,
-
-- If the patch has been merged into an upstream maintainer tree, but has not yet
-been merged into Linux mainline
-    - tag the patch subject with `FROMGIT:`
-    - add info on where the patch came from as `(cherry picked from commit <sha1> <repo> <branch>)`. This
-must be a stable maintainer branch (not rebased, so don't use `linux-next` for example).
-    - if changes were required, use `BACKPORT: FROMGIT:`
-    - Example:
-        - if the commit message in the maintainer tree is
-```
-        important patch from upstream
-
-        This is the detailed description of the important patch
-
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-```
-        - then Joe Smith would upload the patch for the common kernel as
-```
-        FROMGIT: important patch from upstream
-
-        This is the detailed description of the important patch
-
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-
-        Bug: 135791357
-        (cherry picked from commit 878a2fd9de10b03d11d2f622250285c7e63deace
-         https://git.kernel.org/pub/scm/linux/kernel/git/foo/bar.git test-branch)
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
-
-
-- If the patch has been submitted to LKML, but not accepted into any maintainer tree
-    - tag the patch subject with `FROMLIST:`
-    - add a `Link:` tag with a link to the submittal on lore.kernel.org
-    - if changes were required, use `BACKPORT: FROMLIST:`
-    - Example:
-```
-        FROMLIST: important patch from upstream
-
-        This is the detailed description of the important patch
-
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-
-        Bug: 135791357
-        Link: https://lore.kernel.org/lkml/20190619171517.GA17557@someone.com/
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
-
-## Requirements for Android-specific patches: `ANDROID:`
-
-- If the patch is fixing a bug to Android-specific code
-    - tag the patch subject with `ANDROID:`
-    - add a `Fixes:` tag that cites the patch with the bug
-    - Example:
-```
-        ANDROID: fix android-specific bug in foobar.c
-
-        This is the detailed description of the important fix
-
-        Fixes: 1234abcd2468 ("foobar: add cool feature")
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
-
-- If the patch is a new feature
-    - tag the patch subject with `ANDROID:`
-    - add a `Bug:` tag with the Android bug (required for android-specific features)
-
+## Credits
+- **Uniperf** for performance and battery life enhancements.
+- **KernelSU** for root access.
+- Special thanks to the **Android kernel development community**.
