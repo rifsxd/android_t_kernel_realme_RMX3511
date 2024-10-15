@@ -48,10 +48,12 @@ Gain full control over your device with **KernelSU**. This feature allows root a
 3. Backup your data before proceeding.
 
 ### Flashing the Kernel:
+
 **METHOD 1**
 1. Download the Anykernel3-xxx.zip from [Releases](https://guthub.com/rifsxd/android_t_kernel_realme_rmx3511/releases).
 2. Boot into **TWRP** recovery.
 3. Install the Anykernel3-xxx.zip and reboot.
+
 **METHOD 2**
 1. Download the boot.img from [Releases](https://guthub.com/rifsxd/android_t_kernel_realme_rmx3511/releases).
 2. Reboot into bootloader.
