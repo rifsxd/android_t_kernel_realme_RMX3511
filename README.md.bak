@@ -64,7 +64,7 @@ Gain full control over your device with **KernelSU**. This feature allows root a
 4. Reboot your device and enjoy the enhanced performance!
 
 ### Rooting with KernelSU:
-After flashing the kernel, KernelSU should be active. You can install the KernelSU root manager app to manage root permissions.
+After flashing the kernel, KernelSU should be active. You can install a root manager app to manage root permissions.
 
 ## Bug Reports & Contributions
 If you encounter any issues or want to contribute to the development of this kernel, feel free to open an issue or pull request on the [GitHub Repository](https://guthub.com/rifsxd/android_t_kernel_realme_rmx3511).
