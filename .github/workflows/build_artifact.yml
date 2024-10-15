@@ -257,15 +257,15 @@ jobs:
       - name: 😌 Start patching boot.img
         working-directory: ${{ github.workspace }}
         run: |
-          if [[ -f out/arch/${{ env.ARCH }}/boot/Image ]]; then
+          if [[ -f "${{ github.workspace }}out/arch/${{ env.ARCH }}/boot/Image" ]]; then
             echo "🤔 Unpacking stock boot.img"
             mkdir -p tmp/unpacked_boot
             cd tmp/unpacked_boot
-            ./build/bin/magiskboot unpack build/boot/boot.img
+            "${{ env.WORKSPACE }}/build/bin/magiskboot" unpack "${{ env.WORKSPACE }}/build/boot/boot.img"
             echo "🤔 Unpacked boot.img"
-            cp out/arch/${{ env.ARCH }}/boot/Image ./kernel
+            cp "${{ github.workspace }}out/arch/${{ env.ARCH }}/boot/Image" ./kernel
             echo "🤔 Replaced stock kernel with custom kernel"
-            ./build/bin/magiskboot repack build/boot/boot.img
+            "${{ env.WORKSPACE }}/build/bin/magiskboot" repack "${{ env.WORKSPACE }}/build/boot/boot.img"
             echo "🤔 Repacked boot.img"
             mv new-boot.img boot.img
           else
@@ -277,7 +277,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-boot.img
-          path: ${{ env.KERNEL_NAME }}/unpacked_boot/boot.img
+          path: ${{ github.workspace }}/unpacked_boot/boot.img
           if-no-files-found: ignore
           retention-days: 7
 
