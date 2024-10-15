@@ -8,6 +8,7 @@ on:
   schedule:
     - cron: "14 13 * * 5"
 
+
 jobs:
   Read-configuration:
     name: 🐂 Parse *.config.json
@@ -122,12 +123,7 @@ jobs:
             cache-${{ env.KERNEL_NAME }}-${{env.HASH}}-${{ env.BUILD_DATE }}
             cache-${{ env.KERNEL_NAME }}-${{env.HASH}}-
             cache-${{ env.KERNEL_NAME }}-
-
-      - name: 🌟 Clone kernel source => (${{ env.KERNEL_REPO }})
-        run: |
-          git clone --recursive --depth=1 -j $(nproc) --branch ${{ env.KERNEL_BRANCH }} ${{ env.KERNEL_REPO }} ${{ env.KERNEL_NAME }}
-          # tree ${{ env.KERNEL_NAME }}
-
+            
       - name: 💫 Get toolchains
         env:
           toolchains: "${{ toJSON(matrix.CONFIG.toolchains) }}"
@@ -224,31 +220,8 @@ jobs:
 
           echo "🤔 $args"
 
-      - name: 😋 Setup KernelSU
-        working-directory: ${{ env.KERNEL_NAME }}
-        env:
-          ARCH: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.ENABLE_KERNELSU == 'true' }}
-        run: |
-          # Delete old KernelSU
-          if [ -d "./KernelSU" ]; then
-            rm -rf "./KernelSU"
-          fi
-          if [ -d "./drivers/kernelsu" ]; then
-            rm -rf "./drivers/kernelsu"
-          fi
-
-          # Apply new KernelSU patches
-          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
-
-          echo -e "CONFIG_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-          echo -e "CONFIG_HAVE_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-          echo -e "CONFIG_KPROBE_EVENTS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-
-          cat arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
-
       - name: 👍 Start building the kernel
-        working-directory: ${{ env.KERNEL_NAME }}
+        working-directory: ${{ github.workspace }}
         env:
           ARGS: ${{ steps.generate-args.outputs.ARGS }}
         run: |
@@ -258,6 +231,35 @@ jobs:
           make ${{ env.ARGS }} ${{ env.KERNEL_DEFCONFIG_PATH }}
           make ${{ env.ARGS }}
           # tree ${{ env.OUT_DIR }}
+          
+      - name: 😌 Start patching boot.img
+        working-directory: ${{ github.workspace }}
+        env:
+          ARCH: ${{ steps.generate-args.outputs.ARCH }}
+        run: |
+          if [[ -f ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/Image ]]; then
+            echo "🤔 Unpacking stock boot.img"
+            mkdir -p tmp/unpacked_boot
+            cd tmp/unpacked_boot
+            ${{ github.workspace }}/build/bin/magiskboot unpack ${{ github.workspace }}/build/boot/boot.img
+            echo "🤔 Unpacked boot.img"
+            cp ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/Image ./kernel
+            echo "🤔 Replaced stock kernel with custom kernel"
+            ${{ github.workspace }}/build/bin/magiskboot repack ${{ github.workspace }}/build/boot/boot.img
+            echo "🤔 Repacked boot.img"
+            mv new-boot.img ../boot.img
+          else
+            echo "🤔 Compiled kernel Image not found!"
+            exit 1
+          fi
+          
+      - name: 💛 Upload boot.img
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-boot.img
+          path: ${{ github.workspace }}/tmp/boot.img
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: 💛 Upload Image
         uses: actions/upload-artifact@v3
@@ -360,7 +362,7 @@ jobs:
           cd AnyKernel3/
           zip -q -r "${{ env.ANYKERNEL3_FILE }}.zip" *
 
-      - name: 💾 Upload AnyKernel3 image => (${{ env.BUILD_DATE }})
+      - name: 💾 Upload AnyKernel3 image
         env:
           ANYKERNEL3_FILE: "AnyKernel3-${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}"
         uses: actions/upload-artifact@v3
@@ -369,7 +371,7 @@ jobs:
           name: "${{ env.ANYKERNEL3_FILE }}"
           path: AnyKernel3/*
 
-      - name: 🧧 Create GitHub Release => (${{ env.BUILD_DATE }})
+      - name: 🧧 Create GitHub Release
         env:
           ANYKERNEL3_FILE: "${{ env.WORKSPACE }}/AnyKernel3-${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}"
         continue-on-error: true
@@ -377,6 +379,6 @@ jobs:
         if: ${{ env.USE_ANYKERNEL3 == 'true' && env.CONFIRM_RELEASE == 'true' }}
         with:
           tag_name: v${{ env.BUILD_DATE }}.${{ github.run_number }}
-          files: "${{ env.ANYKERNEL3_FILE }}.zip"
+          files: "${{ env.ANYKERNEL3_FILE }}.zip","${{ github.workspace }}/tmp/boot.img"
           generate_release_notes: true
     
