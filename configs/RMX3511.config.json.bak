@@ -59,6 +59,6 @@
             "use": true,
             "release": true
         },
-        "enableKernelSU": true
+        "enableKernelSU": true,
     }
 ]
