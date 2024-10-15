@@ -37,6 +37,11 @@ CONFIG_HAVE_ARCH_AUDITSYSCALL=y
 CONFIG_AUDITSYSCALL=y
 
 #
+# KernelSU rootkit integration
+#
+CONFIG_KSU=y
+
+#
 # IRQ subsystem
 #
 CONFIG_GENERIC_IRQ_PROBE=y
