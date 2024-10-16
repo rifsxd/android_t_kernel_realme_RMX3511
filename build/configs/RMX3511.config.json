@@ -58,11 +58,9 @@
         "AnyKernel3": {
             "use": true,
             "release": true,
-            "release": true,
             "custom": {
                 "repo": "https://github.com/rifsxd/AnyKernel3",
                 "branch": "master"
             }
-        "enableKernelSU": true
     }
 ]
