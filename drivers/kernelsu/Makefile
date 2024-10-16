@@ -14,13 +14,8 @@ kernelsu-objs += selinux/rules.o
 ccflags-y += -I$(srctree)/security/selinux -I$(srctree)/security/selinux/include
 ccflags-y += -I$(objtree)/security/selinux -include $(srctree)/include/uapi/asm-generic/errno.h
 
-obj-$(CONFIG_KSU) += kernelsu.o
-
-ifdef CONFIG_KSU_VERSION
-KSU_VERSION := $(CONFIG_KSU_VERSION)
-$(info -- KernelSU version: $(KSU_VERSION))
-ccflags-y += -DKSU_VERSION=$(KSU_VERSION)
-endif
+$(info -- KernelSU version: $(CONFIG_KSU_VERSION))
+ccflags-y += -DKSU_VERSION=$(CONFIG_KSU_VERSION)
 
 ifeq ($(shell grep -q " current_sid(void)" $(srctree)/security/selinux/include/objsec.h; echo $$?),0)
 ccflags-y += -DKSU_COMPAT_HAS_CURRENT_SID
