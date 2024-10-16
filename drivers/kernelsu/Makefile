@@ -14,6 +14,8 @@ kernelsu-objs += selinux/rules.o
 ccflags-y += -I$(srctree)/security/selinux -I$(srctree)/security/selinux/include
 ccflags-y += -I$(objtree)/security/selinux -include $(srctree)/include/uapi/asm-generic/errno.h
 
+obj-$(CONFIG_KSU) += kernelsu.o
+
 STATIC_KSU_VERSION := 11872
 $(info -- KernelSU version: $(STATIC_KSU_VERSION))
 ccflags-y += -DKSU_VERSION=$(STATIC_KSU_VERSION)
