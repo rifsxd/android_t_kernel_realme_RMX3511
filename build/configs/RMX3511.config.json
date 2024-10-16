@@ -62,7 +62,7 @@
             "custom": {
                 "repo": "https://github.com/rifsxd/AnyKernel3",
                 "branch": "master"
-            },
+            }
         "enableKernelSU": true
     }
 ]
