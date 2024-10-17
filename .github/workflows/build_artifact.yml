@@ -3,7 +3,7 @@ name: Build kernel artifact
 on:
   push:
     branches:
-      - "uniperf"
+      - "dev"
   workflow_dispatch:
   schedule:
     - cron: "14 13 * * 5"

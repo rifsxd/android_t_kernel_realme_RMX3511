@@ -3,7 +3,7 @@
         "kernelSource": {
             "name": "Realme_C35",
             "repo": "https://github.com/rifsxd/android_t_kernel_realme_RMX3511",
-            "branch": "uniperf",
+            "branch": "dev",
             "device": "RMX3511",
             "defconfig": "RMX3511_defconfig"
         },
