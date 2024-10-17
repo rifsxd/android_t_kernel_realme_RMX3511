@@ -1,0 +1,31 @@
+Uniperf-Turbo Stable Release!
+
+Kernel Version: 5.4.254
+KernelSU Version: v0.9.5 (11872)
+Android Version: 12 - 14
+Boot Image Version: Android 13
+
+***What's new?***
+**Incredible Key improvements**
+- Performance enhanced
+- Ram management optimizations
+- CPU scheduler enhanced -> Interactive Scheduler
+- I/O scheduler enhanced -> BFQ Scheduler
+- Network performance enhanced -> BBR Congestion
+- Battery Life enhanced
+- Latency Enhanced 
+- Touch response enhanced 
+- Boot time improvements
+- NFC drivers and configs enabled
+- Better power management 
+- KernelSU rootkit Integration
+- Fully Stable and Bugless!
+
+***Guide for setting modes for performance***
+- Download FKM (Franko kernel manager)
+- Give root permission with KernelSU
+- In FKM open Kernel Settings, in I/O section choose BFQ I/O scheduler for all partition and toggle all to set on boot
+- Now in memory settings enable KSM and toggle to set on boot
+- Now in miscellaneous section set TCP congestion algorithm to BBR and toggle to set on boot.
+- Now you are done and don't uninstall FKM
+- If you are advanced enough then you can tweak more settings to your liking
