@@ -228,6 +228,23 @@ jobs:
           make ${{ env.ARGS }}
           make ${{ env.ARGS }} dtbs
           # tree ${{ env.OUT_DIR }}
+      
+      - name: 😌 Start building dtbo.img
+        working-directory: ${{ github.workspace }}
+        env:
+          ARCH: ${{ steps.generate-args.outputs.ARCH }}
+        run: |
+          if [[ -f ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/dts/*/*.dtbo  ]]; then
+            echo "🤔 Building building dtbo.img"
+            mkdir -p tmp/dtbo
+            cd tmp/dtbo
+            ${{ github.workspace }}/build/bin/mkdtimg create dtbo.img ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/dts/*/*.dtbo
+            echo "🤔 Built dtbo.img sucessfully"
+            mv dtbo.img ../dtbo.img
+          else
+            echo "🤔 Compiled .dtbo files not found!"
+            exit 1
+          fi
           
       - name: 😌 Start patching boot.img
         working-directory: ${{ github.workspace }}
@@ -249,14 +266,6 @@ jobs:
             echo "🤔 Compiled kernel Image not found!"
             exit 1
           fi
-          
-      - name: 💛 Upload boot.img
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-boot.img
-          path: ${{ github.workspace }}/tmp/boot.img
-          if-no-files-found: ignore
-          retention-days: 7
 
       - name: 💛 Upload Image
         uses: actions/upload-artifact@v3
@@ -288,13 +297,21 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: 💜 Upload dtb
+      # - name: 💜 Upload dtb
+      #   uses: actions/upload-artifact@v3
+      #   env:
+      #     ARCH: ${{ steps.generate-args.outputs.ARCH }}
+      #   with:
+      #     name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-dtb
+      #     path: ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/dtb
+      #     if-no-files-found: ignore
+      #     retention-days: 7
+
+      - name: 💛 Upload boot.img
         uses: actions/upload-artifact@v3
-        env:
-          ARCH: ${{ steps.generate-args.outputs.ARCH }}
         with:
-          name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-dtb
-          path: ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/dtb
+          name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-boot.img
+          path: ${{ github.workspace }}/tmp/boot.img
           if-no-files-found: ignore
           retention-days: 7
 
@@ -304,7 +321,7 @@ jobs:
           ARCH: ${{ steps.generate-args.outputs.ARCH }}
         with:
           name: ${{ env.KERNEL_NAME }}-${{ env.BUILD_DATE }}-dtbo.img
-          path: ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/dtbo.img
+          path: ${{ github.workspace }}/tmp/dtbo.img
           if-no-files-found: ignore
           retention-days: 7
 
