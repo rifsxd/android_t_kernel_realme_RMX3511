@@ -3,6 +3,14 @@
 ## Overview
 Welcome to the custom kernel for the **Realme C35 (RMX3511)**! This kernel is based on **Linux 5.4.254** and is designed to enhance your device’s performance and flexibility. It includes **Uniperf**, a performance and battery life oriented modifications, and **KernelSU**, a kernel-level rootkit providing extended control over your device.
 
+<div align="center">
+	
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/rifsxd/android_t_kernel_realme_RMX3511/total?logo=github&label=Downloads&style=flat)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/rifsxd/android_t_kernel_realme_RMX3511?style=flat&label=Code%20Size)
+[![Build kernel artifact](https://github.com/rifsxd/android_t_kernel_realme_RMX3511/actions/workflows/build_artifact.yml/badge.svg?branch=dev)](https://github.com/rifsxd/android_t_kernel_realme_RMX3511/actions/workflows/build_artifact.yml)
+
+</div>
+
 ### Key Features:
 - **Linux Kernel 5.4.254**: Stable and well-tested for Android devices.
 - **Uniperf (Modifications)**: Improved performance and battery life tuning to maximize device efficiency.
