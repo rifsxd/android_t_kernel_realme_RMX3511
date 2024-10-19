@@ -23,15 +23,15 @@
 # subdir-y += renesas
 # subdir-y += rockchip
 # subdir-y += socionext
-#ifeq ($(PRODUCT_NAME),RMX3624)
-#subdir-y += sprd
+ifeq ($(PRODUCT_NAME),RMX3511)
+subdir-y += nico
+subdir-y += nicky
+subdir-y += nicky-A
+subdir-y += nico-go
 # subdir-y += synaptics
 # subdir-y += ti
 # subdir-y += xilinx
 # subdir-y += zte
-#else
-#subdir-y += nico
-#subdir-y += nicky
-subdir-y += nicky-A
-#subdir-y += nico-go
-#endif
+else
+subdir-y += sprd
+endif

@@ -52,7 +52,10 @@
                 "LDGOLD": "aarch64-linux-gnu-ld.gold",
                 "LLVM_AR": "llvm-ar",
                 "LLVM_DIS": "llvm-dis",
-                "CONFIG_THINLTO": ""
+                "CONFIG_THINLTO": "",
+                "BSP_BUILD_ANDROID_OS": "y",
+                "BSP_BUILD_FAMILY": "qogirl",
+                "PRODUCT_NAME": "RMX3511"
             }
         },
         "AnyKernel3": {
