@@ -1,3 +1,35 @@
+Uniperf-Turbo Stable v20241020.21 Release!
+
+Kernel Version: 5.4.254
+KernelSU Version: v0.9.5 (11872)
+SuSFS Version: v1.4.2
+Android Version: 12 - 14
+Boot Image Version: Android 13
+
+***What's new?***
+**Incredible Key improvements**
+- SuSFS integration for root hiding kernel patches and userspace module for KernelSU
+- Fully Stable and Bugless!
+
+***Guide for userspace modifications***
+**First Step**
+- Download FKM (Franko kernel manager)
+- Give root permission with KernelSU
+- In FKM open Kernel Settings, in I/O section choose BFQ I/O scheduler for all partition and toggle all to set on boot
+- Now in memory settings enable KSM and toggle to set on boot
+- Now in miscellaneous section set TCP congestion algorithm to BBR and toggle to set on boot.
+- Now you are done and don't uninstall FKM
+- If you are advanced enough then you can tweak more settings to your liking
+**Second Step**
+- Download ksu_module_susfs.zip
+- Open KSU Manager
+- Now go to modules section and installed ksu_module_susfs.zip
+- Reboot and enjoy!
+
+
+------------------------------------------------------------
+
+
 Uniperf-Turbo Stable v20241017.15 Release!
 
 Kernel Version: 5.4.254
