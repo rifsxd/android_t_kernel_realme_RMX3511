@@ -2,6 +2,7 @@
 
 ## Overview
 Welcome to the custom kernel for the **Realme C35 (RMX3511)**! This kernel is based on **Linux 5.4.254** and is designed to enhance your device’s performance and flexibility. It includes **Uniperf**, a performance and battery life oriented modifications, and **KernelSU**, a kernel-level rootkit providing extended control over your device.
+**SuSFS Patch**: a kernel filesystem patch to hide SU traces, Suspicious mounts and more.
 
 <div align="center">
 	
