@@ -31,10 +31,10 @@ case "$1" in
         eval "$base_command RMX3511_defconfig"
         ;;
     compile)
-        eval "$base_command -j$(nproc) 2>&1 | tee kernel_log.log"
+        eval "$base_command -j$(nproc) 2>&1 | tee ./out/kernel_log.log"
         ;;
     dtc)
-        eval "$base_command dtbs"
+        eval "$base_command -j$(nproc) dtbs"
         ;;
     *)
         usage

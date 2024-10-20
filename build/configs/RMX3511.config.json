@@ -54,7 +54,7 @@
                 "LLVM_DIS": "llvm-dis",
                 "CONFIG_THINLTO": "",
                 "BSP_BUILD_ANDROID_OS": "y",
-                "BSP_BUILD_FAMILY": "qogirl",
+                "BSP_BUILD_FAMILY": "qogirl6",
                 "PRODUCT_NAME": "RMX3511"
             }
         },
