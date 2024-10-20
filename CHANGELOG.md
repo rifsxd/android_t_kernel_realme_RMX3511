@@ -12,7 +12,9 @@ Boot Image Version: Android 13
 - Fully Stable and Bugless!
 
 ***Guide for userspace modifications***
+
 **First Step**
+
 - Download FKM (Franko kernel manager)
 - Give root permission with KernelSU
 - In FKM open Kernel Settings, in I/O section choose BFQ I/O scheduler for all partition and toggle all to set on boot
@@ -20,7 +22,9 @@ Boot Image Version: Android 13
 - Now in miscellaneous section set TCP congestion algorithm to BBR and toggle to set on boot.
 - Now you are done and don't uninstall FKM
 - If you are advanced enough then you can tweak more settings to your liking
+
 **Second Step**
+
 - Download ksu_module_susfs.zip
 - Open KSU Manager
 - Now go to modules section and installed ksu_module_susfs.zip
