@@ -15,15 +15,18 @@ Welcome to the custom kernel for the **Realme C35 (RMX3511)**! This kernel is ba
 - **Linux Kernel 5.4.254**: Stable and well-tested for Android devices.
 - **Uniperf (Modifications)**: Improved performance and battery life tuning to maximize device efficiency.
 - **KernelSU (Rootkit)**: Full root access with security measures in place.
+- **SuSFS Patch**: Hide SU traces, Suspicious mounts and more.
 - **Android 12 - 14 Support**: Designed to run on all major recent Android versions.
 
 ## Modifications
 
-### 1. **Uniperf (Performance and Battery Life Modifications)**
+### 1. **Uniperf (CPU, Network, Ram, I/O, Latency and Battery Life Performance Modifications)**
 This kernel integrates the **Uniperf** module for boosting performance and battery life. Key enhancements include:
 - Dynamic CPU frequency scaling
 - Improved task scheduling for reduced latency
 - Enhanced memory management and I/O handling
+- BBR Network congestion algorithm
+- Ram optimized modifications. Example: KSM and a lot more.
 - Interactive CPU governor as default 
 - Added BFQ I/O scheduler
 - Disabled debug logs
@@ -42,11 +45,11 @@ Gain full control over your device with **KernelSU**. This feature allows root a
 
 ## Compatibility
 
-| Feature         | Supported Versions         |
-|-----------------|----------------------------|
+| Feature         | Supported Versions          |
+|-----------------|-----------------------------|
 | Device          | Realme C35 (RMX3511)        |
 | Android Versions| Android 12 - 14             |
-| Kernel Version  | 5.4.254                     |
+| Kernel Version  | 5.4.xxx                     |
 
 ## Installation
 
@@ -78,6 +81,6 @@ After flashing the kernel, KernelSU should be active. You can install the Kernel
 If you encounter any issues or want to contribute to the development of this kernel, feel free to open an issue or pull request on the [GitHub Repository](https://guthub.com/rifsxd/android_t_kernel_realme_rmx3511).
 
 ## Credits
-- **Uniperf** for performance and battery life enhancements.
+- **Uniperf** for performance, battery life, ram, latency & network enhancements.
 - [KernelSU](https://github.com/tiann/kernelsu) for root access.
 - Special thanks to the **Android kernel development community**.
