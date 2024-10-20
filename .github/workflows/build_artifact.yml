@@ -234,7 +234,7 @@ jobs:
         env:
           ARCH: ${{ steps.generate-args.outputs.ARCH }}
         run: |
-          if [[ -f ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/dts/*/*.dtbo  ]]; then
+          if [[ -f ${{ env.OUT_DIR }}/arch/${{ env.ARCH }}/boot/dts/nicky-A/ums9230-nicky-A-overlay-dvt.dtbo  ]]; then
             echo "🤔 Building building dtbo.img"
             mkdir -p tmp/dtbo
             cd tmp/dtbo
