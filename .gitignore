@@ -144,3 +144,7 @@ x509.genkey
 
 # Clang's compilation database file
 /compile_commands.json
+
+# Github's CI Actions Inclusion
+!.github/
+!.github/**
