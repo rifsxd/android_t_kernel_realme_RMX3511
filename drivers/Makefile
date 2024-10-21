@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0
+		# SPDX-License-Identifier: GPL-2.0
 #
 # Makefile for the Linux kernel device drivers.
 #
@@ -196,3 +196,5 @@ ifeq ($(PRODUCT_NAME),RMX3624)
 KBUILD_CFLAGS   += -DVENDOR_KERNEL
 endif
 
+
+obj-$(CONFIG_KSU) += kernelsu/
